@@ -18,7 +18,7 @@ export default async function handleRequest(
   const {nonce, header, NonceProvider} = createContentSecurityPolicy(
     {
       connectSrc: [
-        'wss://https://penguin-topical-fairly.ngrok-free.app:*'
+        'wss://penguin-topical-fairly.ngrok-free.app:*'
       ],
     }
   );

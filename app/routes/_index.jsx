@@ -27,6 +27,7 @@ export default function Homepage() {
   const data = useLoaderData();
   return (
     <div className="home">
+      <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt praesentium a repudiandae eos qui. Enim quas doloribus laudantium nobis sint, nostrum sunt laboriosam delectus earum! Voluptatem illum facere velit temporibus.</h1>
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>

@@ -1,6 +1,6 @@
-import {json} from '@shopify/remix-oxygen';
-import {Form, NavLink, Outlet, useLoaderData} from '@remix-run/react';
-import {CUSTOMER_DETAILS_QUERY} from '~/graphql/customer-account/CustomerDetailsQuery';
+import { json } from "@shopify/remix-oxygen";
+import { Form, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { CUSTOMER_DETAILS_QUERY } from "~/graphql/customer-account/CustomerDetailsQuery";
 
 export function shouldRevalidate() {
   return true;
@@ -9,35 +9,35 @@ export function shouldRevalidate() {
 /**
  * @param {LoaderFunctionArgs}
  */
-export async function loader({context}) {
-  const {data, errors} = await context.customerAccount.query(
-    CUSTOMER_DETAILS_QUERY,
+export async function loader({ context }) {
+  const { data, errors } = await context.customerAccount.query(
+    CUSTOMER_DETAILS_QUERY
   );
 
   if (errors?.length || !data?.customer) {
-    throw new Error('Customer not found');
+    throw new Error("Customer not found");
   }
 
   return json(
-    {customer: data.customer},
+    { customer: data.customer },
     {
       headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Set-Cookie': await context.session.commit(),
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Set-Cookie": await context.session.commit(),
       },
-    },
+    }
   );
 }
 
 export default function AccountLayout() {
   /** @type {LoaderReturnData} */
-  const {customer} = useLoaderData();
+  const { customer } = useLoaderData();
 
   const heading = customer
     ? customer.firstName
       ? `Welcome, ${customer.firstName}`
       : `Welcome to your account.`
-    : 'Account Details';
+    : "Account Details";
 
   return (
     <div className="account">
@@ -46,16 +46,16 @@ export default function AccountLayout() {
       <AccountMenu />
       <br />
       <br />
-      <Outlet context={{customer}} />
+      <Outlet context={{ customer }} />
     </div>
   );
 }
 
 function AccountMenu() {
-  function isActiveStyle({isActive, isPending}) {
+  function isActiveStyle({ isActive, isPending }) {
     return {
-      fontWeight: isActive ? 'bold' : undefined,
-      color: isPending ? 'grey' : 'black',
+      fontWeight: isActive ? "bold" : undefined,
+      color: isPending ? "grey" : "black",
     };
   }
 
@@ -81,7 +81,13 @@ function AccountMenu() {
 function Logout() {
   return (
     <Form className="account-logout" method="POST" action="/account/logout">
-      &nbsp;<button type="submit">Sign out</button>
+      &nbsp;
+      <button
+        type="submit"
+        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+      >
+        Sign out
+      </button>
     </Form>
   );
 }
